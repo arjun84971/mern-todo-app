@@ -1,40 +1,48 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { Button, Form, FormGroup, Input } from 'reactstrap';
-
+import uuid from 'uuid';
 
 class AddToDo extends Component {
 
   constructor(){
     super();
-    this.state = {
-        todo : {}
+    this.state = {value: '', id : ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value, id: uuid.v4()});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    if(this.state.value === ''){
+        alert("Can not Enter Blank Value");
+    } else {
+      this.setState({todo:{
+          id: uuid.v4(),
+          name: event.target.value
+      }});
+      this.props.addtodo(this.state);
     }
   }
-  addToDo(e){
-      e.preventDefault();
-      if(this.refs.todo.value === ''){
-          alert("Can not Enter Blank Value");
-      } else {
-        this.setState({todo:{
-            name: this.refs.todo.value
-        }})
-        console.log(this.refs)
-        console.log(this.refs.todo.value)
-        this.props.addtodo(this.state.todo);
-      }
-  }
+
+
   render() {
     return (
         <div>
             <Row>
                 <Col sm={{ size: 6, offset: 3 }}>
-                    <Form onSubmit={this.addToDo.bind(this)}>
+                    <Form onSubmit={this.handleSubmit}>
                         <FormGroup tag="fieldset">
                             <br />
-                            <Input type="text" ref="todo" placeholder="Add ToDo to the list here" />
+                            <input type="text" value={this.state.value} onChange={this.handleChange} />
                         </FormGroup>
-                        <input type="submit" value="Submit" />
+                        <input type="submit" value="Add" />
                     </Form>
                 </Col>
           </Row>

@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Row, Col } from 'reactstrap';
+import  ToDoItem  from './ToDoItem';
 
 class AllToDos extends Component {
   render() {
+    let todos;
+    if(this.props.todos){
+        console.log(this.props.todos)
+        todos = this.props.todos.map(todo => {
+            return(
+                <div>
+                    <ToDoItem todo={todo} key={todo.id} />
+                </div>
+            );
+        })
+    }
+
     return (
         <div>
             <Row>
                 <Col sm={{ size: 6, offset: 3 }}>
                     <br />
                     <ListGroup>
-                        <ListGroupItem>Cras justo odio</ListGroupItem>
-                        <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                        <ListGroupItem>Morbi leo risus</ListGroupItem>
-                        <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
-                        <ListGroupItem>Vestibulum at eros</ListGroupItem>
+                        {todos}
                     </ListGroup>
+
                 </Col>
             </Row>
         </div>

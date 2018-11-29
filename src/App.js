@@ -16,7 +16,6 @@ class App extends Component {
   handleAddToDo(todo){
     let todos = this.state.todos;
     todos.push(todo);
-    console.log(todos);
     this.setState({todos:todos});
   }
 
@@ -26,7 +25,7 @@ class App extends Component {
       <div>
         <Header />
         <AddToDo addtodo={this.handleAddToDo.bind(this)} />
-        <AllToDos />
+        <AllToDos todos={this.state.todos}/>
       </div>
     );
   }
